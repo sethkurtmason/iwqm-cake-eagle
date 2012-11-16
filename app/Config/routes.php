@@ -31,6 +31,10 @@
  */
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
 
+
+  Router::mapResources('stations');
+  Router::mapResources('variables');
+  Router::parseExtensions();
 /**
  * Load all plugin routes.  See the CakePlugin documentation on 
  * how to customize the loading of plugin routes.
