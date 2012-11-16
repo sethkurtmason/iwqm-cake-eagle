@@ -1,4 +1,5 @@
 <?php
+$this->response->header('Access-Control-Allow-Origin, ''*');
 /**
  *
  * PHP 5
