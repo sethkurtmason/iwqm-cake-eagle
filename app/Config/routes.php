@@ -34,6 +34,7 @@
 
   Router::mapResources('stations');
   Router::mapResources('variables');
+  Router::mapResources('stationsvariables');
   Router::parseExtensions();
 /**
  * Load all plugin routes.  See the CakePlugin documentation on 
