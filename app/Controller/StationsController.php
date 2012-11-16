@@ -17,7 +17,13 @@
                 '_serialize' => array('station')
             ));
         }
-
+         public function by_name($id) {
+              $station = $this->Station->findByName($id);
+              $this->set(array(
+                  'station' => $station,
+                  '_serialize' => array('station')
+              ));
+          }
 
 
   }
