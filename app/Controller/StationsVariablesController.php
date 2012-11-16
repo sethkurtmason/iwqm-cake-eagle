@@ -14,15 +14,16 @@
           $this->loadModel('Station');
           $this->loadModel('Variable');
             $results = $this->Station->findById($id);
-            $variables ="";
+            $variables =array();
             $var = $this->StationsVariable->findAllByStationId($id);
             foreach($var as &$value){
               //echo $value['StationsVariable']['variable_id'];
               //echo ", ";
               $variable = $this->Variable->findById($value['StationsVariable']['variable_id']);
-              //$variables = array_merge($variables, $variable);
+              array_push($variables, $variable['Variable']);
             }
-            //print_r($results);
+            //print_r($variables);
+            $results['Variable'] =$variables;
             $this->set(array(
                 'data' => $results,
                 '_serialize' => array('data')
