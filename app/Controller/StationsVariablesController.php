@@ -48,6 +48,43 @@
                   '_serialize' => array('data')
               ));
           }
+        public function characteristics() {   
+            $this->loadModel('Variable');
+            $variables =array();
+            $stations_array = $this->params['url']['stations'];
+            foreach ($stations_array as &$station_id) {
+                $vars = $this->StationsVariable->findAllByStationId($station_id);
+                foreach($vars as &$var){
+                  $variable = $this->Variable->findById($var['StationsVariable']['variable_id'],
+                    array(
+                      'fields'=>('Variable.term')
+                    )
+                  );
+                  array_push($variables, $variable['Variable']);
+                }
+            }
+            $this->set(array(
+                'variables' => $variables,
+                '_serialize' => array('variables')
+            ));
+            // $this->loadModel('Variable');
+            //   $variables =array();
+            //   $var = $this->StationsVariable->findAllByStationId($results['Station']['id']);
+            //   $this->params['stations']
+            //   foreach($results as &$res){
+            //   $var = $this->StationsVariable->find('all',
+            //     $va = $this->Variable->findById($res['StationsVariable']['variable_id'],
+            //       array(
+            //         'fields'=>('Variable.term')
+            //       )
+            //     );
+            //     foreach($var as &$value){
+            //     array_push($variables, $variable['Variable']);
+            //   }
+            //   //print_r($variables);
+            //   $results['Variable'] =$variables;
+
+          }
 
 
   }
