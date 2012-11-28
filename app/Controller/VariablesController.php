@@ -22,9 +22,13 @@
               'fields' => array('DISTINCT Variable.term')
             )
           );
+          $var_array = array();
+          foreach($variables as &$var){
+            array_push($var_array, $var['Variable']['term']);
+          }
           $this->set(array(
-              'variables' => $variables,
-              '_serialize' => array('variables')
+              'characteristics' => $var_array,
+              '_serialize' => array('characteristics')
           ));
         }
   }
