@@ -49,45 +49,60 @@
             '_serialize' => array('data')
         ));
     }
-    public function characteristics() {   
+    public function characteristics_by_station_name() {   
         $this->loadModel('Variable');
+        $this->loadModel('Station');
+        $variable_array =array();
         $variables =array();
         $stations_array = $this->params['url']['stations'];
-        foreach ($stations_array as &$station_id) {
-            $vars = $this->StationsVariable->findAllByStationId($station_id);
+        foreach ($stations_array as &$station_name) {
+            $station = $this->Station->findByName($station_name);
+            $vars = $this->StationsVariable->findAllByStationId($station['Station']['id']);
             foreach($vars as &$var){
               $variable = $this->Variable->findById($var['StationsVariable']['variable_id'],
                 array(
                   'fields'=>('Variable.term')
                 )
               );
-              array_push($variables, $variable['Variable']['term']);
+              array_push($variable_array, $variable['Variable']['term']);
             }
+        } 
+        $variable_array = array_unique($variable_array);
+        foreach($variable_array as $var){
+          array_push($variables, $var);
         }
-        $variables = array_unique($variables);
         $this->set(array(
             'characteristics' => $variables,
             '_serialize' => array('characteristics')
         ));
-        // $this->loadModel('Variable');
-        //   $variables =array();
-        //   $var = $this->StationsVariable->findAllByStationId($results['Station']['id']);
-        //   $this->params['stations']
-        //   foreach($results as &$res){
-        //   $var = $this->StationsVariable->find('all',
-        //     $va = $this->Variable->findById($res['StationsVariable']['variable_id'],
-        //       array(
-        //         'fields'=>('Variable.term')
-        //       )
-        //     );
-        //     foreach($var as &$value){
-        //     array_push($variables, $variable['Variable']);
-        //   }
-        //   //print_r($variables);
-        //   $results['Variable'] =$variables;
-
       }
 
+      public function characteristics() {   
+          $this->loadModel('Variable');
+          $variables =array();
+          $variable_array = array();
+          $stations_array = $this->params['url']['stations'];
+          foreach ($stations_array as &$station_id) {
+              $vars = $this->StationsVariable->findAllByStationId($station_id);
+              foreach($vars as &$var){
+                $variable = $this->Variable->findById($var['StationsVariable']['variable_id'],
+                  array(
+                    'fields'=>('Variable.term')
+                  )
+                );
+                array_push($variable_array, $variable['Variable']['term']);
+              }
+          }
+          $variable_array = array_unique($variable_array);
+          $variable_array = array_unique($variable_array);
+          foreach($variable_array as $var){
+            array_push($variables, $var);
+          }
+          $this->set(array(
+              'characteristics' => $variables,
+              '_serialize' => array('characteristics')
+          ));
+        }
 
   }
 ?>
