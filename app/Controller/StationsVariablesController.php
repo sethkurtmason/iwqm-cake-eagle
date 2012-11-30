@@ -78,6 +78,7 @@
         foreach($results as &$var){
           array_push($variables,$var[0]["term"]);
         }
+        sort($variables); 
         //$variables= array_unique($variable_array);
         // foreach($variable_array as $var){
         //   array_push($variables, $var);
