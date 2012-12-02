@@ -1,5 +1,4 @@
 <?php
-header('Access-Control-Allow-Origin: *');
 echo $this->response->header('Access-Control-Allow-Origin: *');
 /**
  *
